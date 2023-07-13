@@ -20,8 +20,10 @@ uint8_t *ec_sign(EC_KEY const *key, uint8_t const *msg,
 
 	bzero(sig->sig, sizeof(sig->sig));
 	if (ECDSA_sign(0, msg, msglen, sig->sig, &siglen, (EC_KEY *)key) != 1)
+	{
+		sig->len = 0;
 		return (NULL);
-
+	}
 	sig->len = siglen;
 	return (sig->sig);
 }
