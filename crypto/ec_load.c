@@ -10,15 +10,15 @@
 EC_KEY *ec_load(char const *folder)
 {
 	FILE *fp;
-	char key_path[BUFSIZ] = {0};
-	char pub_key_path[BUFSIZ] = {0};
+	char key_path[256] = {0};
+	char pub_key_path[256] = {0};
 	EC_KEY *key = NULL;
 
 	if (!folder)
 		return (NULL);
 
-	snprintf(key_path, BUFSIZ, "%s/%s", folder, PRI_FILENAME);
-	snprintf(pub_key_path, BUFSIZ, "%s/%s", folder, PUB_FILENAME);
+	sprintf(key_path, "%s/%s", folder, PRI_FILENAME);
+	sprintf(pub_key_path, "%s/%s", folder, PUB_FILENAME);
 
 	fp = fopen(pub_key_path, "r");
 	if (!fp)
