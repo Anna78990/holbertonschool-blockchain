@@ -15,14 +15,14 @@ int ec_save(EC_KEY *key, char const *folder)
 	if (!key || !folder)
 		return (0);
 	mkdir(folder, 0777);
-	snprintf(path, sizeof(path), "%s/key.pem", folder);
+	sprintf(path, "%s/key.pem", folder);
 	fp = fopen(path, "w");
 	if (!fp)
 		return (0);
 	PEM_write_ECPrivateKey(fp, key, NULL, NULL, 0, NULL, NULL);
 	fclose(fp);
 
-	snprintf(path, sizeof(path), "%s/key_pub.pem", folder);
+	sprintf(path, "%s/key_pub.pem", folder);
 	fp = fopen(path, "w");
 	if (!fp)
 		return (0);
