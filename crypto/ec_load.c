@@ -10,7 +10,8 @@
 EC_KEY *ec_load(char const *folder)
 {
 	FILE *fp;
-	char key_path[BUFSIZ], pub_key_path[BUFSIZ];
+	char key_path[BUFSIZ] = {0};
+	char pub_key_path[BUFSIZ] = {0};
 	EC_KEY *key = NULL;
 
 	if (!folder)
@@ -23,7 +24,7 @@ EC_KEY *ec_load(char const *folder)
 	if (!fp)
 		return (NULL);
 
-	key = PEM_read_ECPrivateKey(fp, NULL, NULL, NULL);
+	key = PEM_read_ECPrivateKey(fp, &key, NULL, NULL);
 	fclose(fp);
 	if (!key)
 		return (NULL);
