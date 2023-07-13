@@ -16,8 +16,8 @@ EC_KEY *ec_load(char const *folder)
 	if (!folder)
 		return (NULL);
 
-	snprintf(key_path, BUFSIZ, "%s/%s", folder, "key.pem");
-	snprintf(pub_key_path, BUFSIZ, "%s/%s", folder, "key_pub.pem");
+	snprintf(key_path, BUFSIZ, "%s/%s", folder, PRI_FILENAME);
+	snprintf(pub_key_path, BUFSIZ, "%s/%s", folder, PUB_FILENAME);
 
 	fp = fopen(key_path, "r");
 	if (!fp)

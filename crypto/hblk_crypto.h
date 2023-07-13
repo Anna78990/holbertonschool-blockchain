@@ -15,7 +15,8 @@
 
 #define EC_PUB_LEN 65
 #define EC_CURVE NID_secp256k1
-
+#define PRI_FILENAME "key.pem"
+#define PUB_FILENAME "key_pub.pem"
 
 /**
  * struct sig_s - EC Signature structure
