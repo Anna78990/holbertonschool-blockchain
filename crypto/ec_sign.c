@@ -13,14 +13,9 @@
 uint8_t *ec_sign(EC_KEY const *key, uint8_t const *msg,
 		size_t msglen, sig_t *sig)
 {
-	const EC_GROUP *group;
 	unsigned int siglen;
 
 	if (!key || !msg || !sig)
-		return (NULL);
-
-	group = EC_KEY_get0_group(key);
-	if (!group)
 		return (NULL);
 
 	sig->len = ECDSA_size(key);
