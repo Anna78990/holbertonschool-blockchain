@@ -9,22 +9,20 @@
  */
 int ec_save(EC_KEY *key, char const *folder)
 {
-{
 	FILE *fp;
 	char path[256];
-	EVP_PKEY *pkey = EVP_PKEY_new();
 
-	if (mkdir(folder, 0700) != 0 && errno != EEXIST)
+	if (mkdir(folder, 0777) != 0 && errno != EEXIST)
 		return (0);
 
-	if (!EVP_PKEY_set1_EC_KEY(pkey, key))
+	if (!key)
 		return (0);
 
 	snprintf(path, sizeof(path), "%s/key.pem", folder);
 	fp = fopen(path, "w");
 	if (!fp)
 		return (0);
-	if (!PEM_write_PrivateKey(fp, pkey, NULL, NULL, 0, NULL, NULL))
+	if (!PEM_write_ECPrivateKey(fp, key, NULL, NULL, 0, NULL, NULL))
 	{
 		fclose(fp);
 		return (0);
@@ -41,8 +39,6 @@ int ec_save(EC_KEY *key, char const *folder)
 		return (0);
 	}
 	fclose(fp);
-
-	EVP_PKEY_free(pkey);
 
 	return (1);
 
