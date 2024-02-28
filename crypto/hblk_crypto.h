@@ -26,26 +26,28 @@
  * struct sig_s - EC Signature structure
  *
  * @sig: Signature buffer. The whole space may not be used
- * @len: Actual signature size. Can't exceed SIG_MAX_LEN, therefore stored on a byte
+ * @len: Actual signature size.
+ *       Can't exceed SIG_MAX_LEN, therefore stored on a byte
  */
 typedef struct sig_s
 {
-    /*
-     * @sig must stay first, so we can directly use the structure as
-     * an array of char
-     */
-    uint8_t     sig[SIG_MAX_LEN];
-    uint8_t     len;
+	/*
+	* @sig must stay first, so we can directly use the structure as
+	* an array of char
+	*/
+	uint8_t sig[SIG_MAX_LEN];
+	uint8_t len;
 } sig_t;
+
 
 /**
  * struct block_info_s - Block info structure
  *
  * @index: Index of the Block in the Blockchain
- * @difficulty: Difficulty of proof of work 
- * @timestamp:  Time the Block was created at
+ * @difficulty: Difficulty of proof of work
+ * @timestamp: Time the Block was created at
  * @nonce: Salt value used to change the Block hash
- * @prev_hash:  Hash of the previous Block in the Blockchain
+ * @prev_hash: Hash of the previous Block in the Blockchain
  */
 typedef struct block_info_s
 {
@@ -55,7 +57,6 @@ typedef struct block_info_s
 	uint64_t nonce;
 	uint8_t	 prev_hash[SHA256_DIGEST_LENGTH];
 } block_info_t;
-
 
 uint8_t *sha256(int8_t const *s, size_t len,
 		uint8_t digest[SHA256_DIGEST_LENGTH]);
