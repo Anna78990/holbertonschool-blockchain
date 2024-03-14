@@ -40,24 +40,6 @@ typedef struct sig_s
 } sig_t;
 
 
-/**
- * struct block_info_s - Block info structure
- *
- * @index: Index of the Block in the Blockchain
- * @difficulty: Difficulty of proof of work
- * @timestamp: Time the Block was created at
- * @nonce: Salt value used to change the Block hash
- * @prev_hash: Hash of the previous Block in the Blockchain
- */
-typedef struct block_info_s
-{
-	uint32_t index;
-	uint32_t difficulty;
-	uint64_t timestamp;
-	uint64_t nonce;
-	uint8_t	 prev_hash[SHA256_DIGEST_LENGTH];
-} block_info_t;
-
 uint8_t *sha256(int8_t const *s, size_t len,
 		uint8_t digest[SHA256_DIGEST_LENGTH]);
 EC_KEY *ec_create(void);
