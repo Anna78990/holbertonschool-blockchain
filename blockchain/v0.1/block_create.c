@@ -14,16 +14,19 @@ block_t *block_create(block_t const *prev, int8_t const *data,
 		      uint32_t data_len)
 {
 	block_t *block = calloc(1, sizeof(block_t));
+	uint32_t len;
+
+	if (data_len > BLOCKCHAIN_DATA_MAX)
+		len = BLOCKCHAIN_DATA_MAX;
+	else
+		len = data_len;
 
 	if (!block || !prev)
 		return (NULL);
 	(block->info).index = (prev->info).index + 1;
 	(block->info).timestamp = time(NULL);
-	memcpy(&((block->data).buffer), data, BLOCKCHAIN_DATA_MAX);
+	memcpy(&((block->data).buffer), data, len);
 	memcpy(&((block->info).prev_hash), prev->hash, SHA256_DIGEST_LENGTH);
-	if (data_len > BLOCKCHAIN_DATA_MAX)
-		(block->data).len = BLOCKCHAIN_DATA_MAX;
-	else
-		(block->data).len = data_len;
+	(block->data).len = len;
 	return (block);
 }
