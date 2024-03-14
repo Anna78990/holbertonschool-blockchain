@@ -36,19 +36,26 @@ typedef struct block_data_s
 /**
  * struct block_info_s - Block info structure
  *
- * @index: Index of the Block in the Blockchain
- * @difficulty: Difficulty of proof of work
- * @timestamp: Time the Block was created at
- * @nonce: Salt value used to change the Block hash
- * @prev_hash: Hash of the previous Block in the Blockchain
+ * @index:      Index of the Block in the Blockchain
+ * @difficulty: Difficulty of proof of work (hash leading zero bits)
+ * @timestamp:  Time the Block was created at (UNIX timestamp)
+ * @nonce:      Salt value used to alter the Block hash
+ * @prev_hash:  Hash of the previous Block in the Blockchain
  */
 typedef struct block_info_s
 {
-	uint32_t index;
-	uint32_t difficulty;
-	uint64_t timestamp;
-	uint64_t nonce;
-	uint8_t	 prev_hash[SHA256_DIGEST_LENGTH];
+    /*
+     * The order of the elements in this structure should remain the same.
+     * It was designed so every element of this structure is aligned and
+     * doesn't require padding from the compiler.
+     * Therefore, it is possible to use the structure as an array of char,
+     * on any architecture.
+     */
+    uint32_t    index;
+    uint32_t    difficulty;
+    uint64_t    timestamp;
+    uint64_t    nonce;
+    uint8_t     prev_hash[SHA256_DIGEST_LENGTH];
 } block_info_t;
 
 /**
