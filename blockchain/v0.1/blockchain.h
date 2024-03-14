@@ -33,6 +33,15 @@ typedef struct block_data_s
     uint32_t    len;
 } block_data_t;
 
+/**
+ * struct block_info_s - Block info structure
+ *
+ * @index: Index of the Block in the Blockchain
+ * @difficulty: Difficulty of proof of work
+ * @timestamp: Time the Block was created at
+ * @nonce: Salt value used to change the Block hash
+ * @prev_hash: Hash of the previous Block in the Blockchain
+ */
 typedef struct block_info_s
 {
 	uint32_t index;
