@@ -2,7 +2,10 @@
 #define BLOCKCHAIN_H
 
 #include "../../crypto/hblk_crypto.h"
+#include "provided/endianness.h"
 #include <llist.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 /**
  * struct blockchain_s - Blockchain structure
@@ -78,5 +81,7 @@ block_t *block_create(block_t const *prev, int8_t const *data,
 void block_destroy(block_t *block);
 void blockchain_destroy(blockchain_t *blockchain);
 uint8_t *block_hash(block_t const *block, uint8_t hash_buf[SHA256_DIGEST_LENGTH]);
+int blockchain_serialize(blockchain_t const *blockchain, char const *path);
+
 
 #endif
