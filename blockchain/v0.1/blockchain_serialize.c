@@ -18,9 +18,10 @@ int blockchain_serialize(blockchain_t const *blockchain, char const *path)
 	if (!blockchain || !blockchain->chain || !path || !fd)
 		return (-1);
 	size = llist_size(blockchain->chain);
-	if (write(fd, hblk_magic, strlen(hblk_magic)) == -1)
+	if ((size_t)write(fd, hblk_magic, strlen(hblk_magic)) != strlen(hblk_magic))
 		return (close(fd), -1);
-	if (write(fd, hblk_version, strlen(hblk_version)) == -1)
+	if ((size_t)write(fd, hblk_version, strlen(hblk_version))
+		!= strlen(hblk_version))
 		return (close(fd), -1);
 	if (write(fd, &endianness, 1) != 1)
 		return (close(fd), -1);
