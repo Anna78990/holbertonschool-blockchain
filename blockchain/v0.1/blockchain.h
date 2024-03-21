@@ -6,7 +6,7 @@
 #include <llist.h>
 #include <fcntl.h>
 #include <unistd.h>
-#define CHECK_ENDIAN(x) (endianness ? SWAPENDIAN(x) : (void)0)
+#define CHECK_ENDIAN(x) (endian ? SWAPENDIAN(x) : (void)0)
 
 /**
  * struct blockchain_s - Blockchain structure
