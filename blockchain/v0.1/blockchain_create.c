@@ -15,14 +15,12 @@ blockchain_t *blockchain_create(void)
 	char *hash = "\xc5\x2c\x26\xc8\xb5\x46\x16\x39\x63\x5d\x8e\xdf\x2a\x97"
 		     "\xd4\x8d\x0c\x8e\x00\x09\xc8\x17\xf2\xb1\xd3\xd7\xff\x2f"
 		     "\x04\x51\x58\x03";
-	block_info_t block_info = {0, 0, 1537578000, 0, {0}};
-	block_data_t block_data = {"Holberton School", 16};
 
 	genesis = calloc(1, sizeof(block_t));
 	if (!genesis)
 		return (NULL);
-	genesis->info = block_info;
-	genesis->data = block_data;
+	genesis->info = {0, 0, 1537578000, 0, {0}};
+	genesis->data = {"Holberton School", 16};
 	memcpy(&(genesis->hash), hash, SHA256_DIGEST_LENGTH);
 
 	chain = llist_create(MT_SUPPORT_FALSE);
