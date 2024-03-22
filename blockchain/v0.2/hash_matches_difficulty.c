@@ -1,7 +1,8 @@
 #include "blockchain.h"
 
 /**
- * hash_matches_difficulty - checks whether a given hash matches a given difficulty
+ * hash_matches_difficulty - checks whether a given
+ *                           hash matches a given difficulty
  * @hash: hash to check
  * @difficulty: the minimum difficulty the hash should match
  * Return: 1 if the difficulty is respected, or 0 otherwise
