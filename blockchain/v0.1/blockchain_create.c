@@ -19,8 +19,13 @@ blockchain_t *blockchain_create(void)
 	genesis = calloc(1, sizeof(block_t));
 	if (!genesis)
 		return (NULL);
-	genesis->info = {0, 0, 1537578000, 0, {0}};
-	genesis->data = {"Holberton School", 16};
+	genesis->info.index = 0;
+	genesis->info.difficulty = 0;
+	genesis->info.timestamp = 1537578000;
+	genesis->info.nonce = 0;
+	memset(genesis->info.prev_hash, 0, SHA256_DIGEST_LENGTH);
+	memcpy(genesis->data.buffer, "Holberton School", 16);
+	genesis->data.len = 16;
 	memcpy(&(genesis->hash), hash, SHA256_DIGEST_LENGTH);
 
 	chain = llist_create(MT_SUPPORT_FALSE);
