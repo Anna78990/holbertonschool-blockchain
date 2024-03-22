@@ -7,13 +7,13 @@
 void block_mine(block_t *block)
 {
 	uint8_t hash_buf[SHA256_DIGEST_LENGTH];
-	uint64_t i, nonce;
+	uint64_t nonce;
 
 	nonce = block->info.nonce;
 
-	for (i = 0; i < ULONG_MAX; i++)
+	while (1)
 	{
-		block->info.nonce = i;
+		block->info.nonce = nonce;
 
 		block_hash(block, hash_buf);
 		if (hash_matches_difficulty(hash_buf, block->info.difficulty))
@@ -21,6 +21,6 @@ void block_mine(block_t *block)
 			memcpy(block->hash, hash_buf, SHA256_DIGEST_LENGTH);
 			return;
 		}
+		nonce++;
 	}
-	block->info.nonce = nonce;
 }
