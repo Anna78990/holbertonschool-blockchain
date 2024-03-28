@@ -15,7 +15,7 @@ uint8_t *sha256(int8_t const *s, size_t len,
 {
 	SHA256_CTX sha256;
 
-	if (digest == NULL)
+	if (s == NULL || digest == NULL)
 		return (NULL);
 
 	if (!SHA256_Init(&sha256))
