@@ -26,10 +26,10 @@ block_t *block_create(block_t const *prev, int8_t const *data,
 	block = calloc(1, sizeof(block_t));
 	if (!block)
 		return (NULL);
-	(block->info).index = (prev->info).index + 1;
-	(block->info).timestamp = time(NULL);
-	memcpy(&((block->data).buffer), data, len);
-	memcpy(&((block->info).prev_hash), prev->hash, SHA256_DIGEST_LENGTH);
-	(block->data).len = len;
+	block->info.index = prev->info.index + 1;
+	block->info.timestamp = time(NULL);
+	memcpy(block->data.buffer, data, len);
+	memcpy(block->info.prev_hash, prev->hash, SHA256_DIGEST_LENGTH);
+	block->data.len = len;
 	return (block);
 }
