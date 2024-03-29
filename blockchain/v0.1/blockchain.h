@@ -6,6 +6,8 @@
 #include <llist.h>
 #include <fcntl.h>
 #include <unistd.h>
+
+#define SHA256_DIGEST_LENGTH 32
 #define CHECK_ENDIAN(x) (endian ? SWAPENDIAN(x) : (void)0)
 
 /**
