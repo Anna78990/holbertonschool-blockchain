@@ -3,6 +3,7 @@
 /**
  * hash_inputs - hash inputs
  * @node: tx_in_t struct
+ * @idx: index
  * @arg: pointer to buffer
  * Return: 0 if success else 1
  */
@@ -18,6 +19,7 @@ int hash_inputs(llist_node_t node, unsigned int idx, void *arg)
  * hash_outputs - hash outputs
  * @node: tx_out_t struct
  * @arg: pointer to buffer
+ * @idx: index
  * Return: 0 if success else 1
  */
 int hash_outputs(llist_node_t node, unsigned int idx, void *arg)

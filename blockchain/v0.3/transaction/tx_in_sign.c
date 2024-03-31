@@ -8,6 +8,7 @@
  * @sender: it contains the private key of the receiver of the coins
  *          contained in the transaction output reference    d by the
  *          transaction input
+ * @all_unspent: the list of all unspent transaction outputs to date
  * Return: a pointer to the resulting signature structure upon success,
  *         or NULL upon failure
  */

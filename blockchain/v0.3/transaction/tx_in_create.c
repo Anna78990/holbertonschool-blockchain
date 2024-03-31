@@ -1,7 +1,7 @@
 #include "transaction.h"
 
 /**
- * tx_in_t tx_in_create - allocates and initializes a transaction
+ * tx_in_create - allocates and initializes a transaction
  *                        input structure
  * @unspent: pointer to the unspent transaction output to be converted to
  *           a transaction input
