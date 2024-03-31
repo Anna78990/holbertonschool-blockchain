@@ -77,6 +77,24 @@ typedef struct unspent_tx_out_s
 } unspent_tx_out_t;
 
 
+/**
+ * struct info_s - Information about a transaction
+ * @bool: 1 if the transaction is valid, 0 otherwise
+ * @all_unspent: List of all unspent transaction outputs
+ * @tx: Pointer to the transaction
+ * @block_index: Index of the Block containing the transaction
+ * @input_amount: Total amount of the transaction inputs
+ * @output_amount: Total amount of the transaction outputs
+ */
+typedef struct tx_info_s
+{
+	uint8_t bool;
+	llist_t *all_unspent;
+	transaction_t const *tx;
+	long input_amount;
+	long output_amount;
+} tx_info_t;
+
 tx_out_t *tx_out_create(uint32_t amount, uint8_t const pub[EC_PUB_LEN]);
 unspent_tx_out_t *unspent_tx_out_create(uint8_t block_hash[SHA256_DIGEST_LENGTH], uint8_t tx_id[SHA256_DIGEST_LENGTH], tx_out_t const *out);
 tx_in_t *tx_in_create(unspent_tx_out_t const *unspent);
