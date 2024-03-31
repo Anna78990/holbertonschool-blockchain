@@ -3,6 +3,7 @@
 
 #include "../../crypto/hblk_crypto.h"
 #include "provided/endianness.h"
+#include "transaction/transaction.h"
 #include <llist.h>
 #include <fcntl.h>
 #include <unistd.h>
@@ -10,16 +11,6 @@
 #include <string.h>
 
 #define CHECK_ENDIAN(x) (endian ? SWAPENDIAN(x) : (void)0)
-
-/**
- * struct blockchain_s - Blockchain structure
- *
- * @chain: Linked list of pointers to block_t
- */
-typedef struct blockchain_s
-{
-    llist_t     *chain;
-} blockchain_t;
 
 
 #define BLOCKCHAIN_DATA_MAX 1024
@@ -68,16 +59,98 @@ typedef struct block_info_s
 /**
  * struct block_s - Block structure
  *
- * @info: Block info
- * @data: Block data
- * @hash: 256-bit digest of the Block, to ensure authenticity
+ * @info:         Block info
+ * @data:         Block data
+ * @transactions: List of transactions
+ * @hash:         256-bit digest of the Block, to ensure authenticity
  */
 typedef struct block_s
 {
     block_info_t    info; /* This must stay first */
     block_data_t    data; /* This must stay second */
+    llist_t     *transactions;
     uint8_t     hash[SHA256_DIGEST_LENGTH];
 } block_t;
+
+/**
+ * struct transaction_s - Transaction structure
+ *
+ * @id:      Transaction ID. A hash of all the inputs and outputs.
+ *           Prevents further alteration of the transaction.
+ * @inputs:  List of `tx_in_t *`. Transaction inputs
+ * @outputs: List of `tx_out_t *`. Transaction outputs
+ */
+typedef struct transaction_s
+{
+    uint8_t     id[SHA256_DIGEST_LENGTH];
+    llist_t     *inputs;
+    llist_t     *outputs;
+} transaction_t;
+
+/**
+ * struct tx_out_s - Transaction output
+ *
+ * @amount: Amount received
+ * @pub:    Receiver's public address
+ * @hash:   Hash of @amount and @pub. Serves as output ID
+ */
+typedef struct tx_out_s
+{
+    uint32_t    amount;
+    uint8_t     pub[EC_PUB_LEN];
+    uint8_t     hash[SHA256_DIGEST_LENGTH];
+} tx_out_t;
+
+/**
+ * struct tx_in_s - Transaction input
+ *
+ * Description: A transaction input always refers to a previous
+ * transaction output. The only exception is for a Coinbase transaction, that
+ * adds new coins to ciruclation.
+ *
+ * @block_hash:  Hash of the Block containing the transaction @tx_id
+ * @tx_id:       ID of the transaction containing @tx_out_hash
+ * @tx_out_hash: Hash of the referenced transaction output
+ * @sig:         Signature. Prevents anyone from altering the content of the
+ *               transaction. The transaction input is signed by the receiver
+ *               of the referenced transaction output, using their private key
+ */
+typedef struct tx_in_s
+{
+    uint8_t     block_hash[SHA256_DIGEST_LENGTH];
+    uint8_t     tx_id[SHA256_DIGEST_LENGTH];
+    uint8_t     tx_out_hash[SHA256_DIGEST_LENGTH];
+    sig_t       sig;
+} tx_in_t;
+
+/**
+ * struct unspent_tx_out_s - Unspent transaction output
+ *
+ * Description: This structure helps identify transaction outputs that were not
+ * used in any transaction input yet, making them "available".
+ *
+ * @block_hash: Hash of the Block containing the transaction @tx_id
+ * @tx_id:      ID of the transaction containing @out
+ * @out:        Copy of the referenced transaction output
+ */
+typedef struct unspent_tx_out_s
+{
+    uint8_t     block_hash[SHA256_DIGEST_LENGTH];
+    uint8_t     tx_id[SHA256_DIGEST_LENGTH];
+    tx_out_t    out;
+} unspent_tx_out_t;
+
+/**
+ * struct blockchain_s - Blockchain structure
+ *
+ * @chain:   Linked list of Blocks
+ * @unspent: Linked list of unspent transaction outputs
+ */
+typedef struct blockchain_s
+{
+    llist_t     *chain;
+    llist_t     *unspent;
+} blockchain_t;
 
 # define BLOCK_GENERATION_INTERVAL 1
 # define DIFFICULTY_ADJUSTMENT_INTERVAL 5
@@ -94,6 +167,5 @@ int block_is_valid(block_t const *block, block_t const *prev_block);
 int hash_matches_difficulty(uint8_t const hash[SHA256_DIGEST_LENGTH], uint32_t difficulty);
 void block_mine(block_t *block);
 uint32_t blockchain_difficulty(blockchain_t const *blockchain);
-tx_out_t *tx_out_create(uint32_t amount, uint8_t const pub[EC_PUB_LEN]);
 
 #endif
