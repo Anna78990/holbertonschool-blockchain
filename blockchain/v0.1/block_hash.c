@@ -23,7 +23,6 @@ uint8_t *block_hash(block_t const *block,
 		memcpy(temp_buf + sizeof(block->info), block->data.buffer,
 				block->data.len);
 		sha256((int8_t const *)temp_buf, length, hash_buf);
-		free(temp_buf);
 	}
 	else
 	{
