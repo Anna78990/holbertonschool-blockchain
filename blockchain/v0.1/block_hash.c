@@ -11,10 +11,27 @@ uint8_t *block_hash(block_t const *block,
 		    uint8_t hash_buf[SHA256_DIGEST_LENGTH])
 {
 	size_t length = (sizeof(block->info) + block->data.len);
+	uint8_t *temp_buf = NULL;
 
-	if (!block)
-		return (NULL);
 	if (length > SHA256_DIGEST_LENGTH)
-		hash_buf = (uint8_t *)malloc(length);
-	return (sha256((int8_t const *)block, length, hash_buf));
+	{
+		temp_buf = (uint8_t *)malloc(length);
+		if (temp_buf == NULL)
+			return (NULL);
+
+		memcpy(temp_buf, (uint8_t *)&block->info, sizeof(block->info));
+		memcpy(temp_buf + sizeof(block->info), block->data.buffer,
+				block->data.len);
+		sha256((int8_t const *)temp_buf, length, hash_buf);
+		free(temp_buf);
+	}
+	else
+	{
+		memcpy(hash_buf, (uint8_t *)&block->info, sizeof(block->info));
+		memcpy(hash_buf + sizeof(block->info), block->data.buffer,
+				block->data.len);
+		sha256((int8_t const *)block, length, hash_buf);
+	}
+
+	return (hash_buf);
 }
