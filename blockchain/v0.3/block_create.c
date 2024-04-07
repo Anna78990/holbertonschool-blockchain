@@ -31,5 +31,8 @@ block_t *block_create(block_t const *prev, int8_t const *data,
 	memcpy(&((block->data).buffer), data, len);
 	memcpy(&((block->info).prev_hash), prev->hash, SHA256_DIGEST_LENGTH);
 	(block->data).len = len;
+	block->transactions = llist_create(MT_SUPPORT_FALSE);
+	if (!block->transactions)
+		return (free(block), NULL);
 	return (block);
 }
