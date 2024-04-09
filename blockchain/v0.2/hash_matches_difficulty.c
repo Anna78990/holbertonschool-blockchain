@@ -10,23 +10,28 @@
 int hash_matches_difficulty(uint8_t const hash[SHA256_DIGEST_LENGTH],
 	uint32_t difficulty)
 {
-	uint8_t *ptr = (uint8_t *)hash;
-	uint32_t diff = 0;
-	int i;
+	uint8_t i = 0, j = 0, zeros = 0, binary = 0, bit = 0;
 
-	if (!hash)
+	if (!hash || difficulty > (SHA256_DIGEST_LENGTH * 8))
 		return (0);
-	for (; ptr < hash + SHA256_DIGEST_LENGTH; ptr++)
+
+	for (i = 0; i < SHA256_DIGEST_LENGTH; i++)
 	{
-		for (i = 7; i >= 0; i--)
+		binary = hash[i];
+		if (binary == 0x0)
 		{
-			if ((*ptr >> i) & 1)
-				break;
-			diff++;
+			zeros += 8;
+			continue;
 		}
+		for (j = 0; j < 8; j++, binary >>= 1)
+		{
+			bit++;
+			if (binary & 1)
+				bit = 0;
+		}
+		break;
 	}
-	if (diff > difficulty)
-		return (diff);
-	else
-		return (difficulty);
+	if (zeros + bit != difficulty)
+		return (0);
+	return (1);
 }
