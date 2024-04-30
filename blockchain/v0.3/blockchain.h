@@ -15,6 +15,33 @@
 
 #define BLOCKCHAIN_DATA_MAX 1024
 
+
+/**
+ * enum _LLIST - All the different functions errors
+ *
+ * @LLIST_SUCCESS:           Success
+ * @LLIST_NODE_NOT_FOUND:     No matching node found
+ * @LLIST_NULL_ARGUMENT:      NULL argument
+ * @LLIST_OUT_OF_RANGE:       Index out of range
+ * @LLIST_MALLOC_ERROR:       Memory allocation error
+ * @LLIST_MULTITHREAD_ISSUE:  Multithreading error
+ */
+
+/**
+ * typedef enum _LLIST
+ * {
+ *	LLIST_SUCCESS = 0,
+ *	LLIST_NODE_NOT_FOUND,
+ *	LLIST_NULL_ARGUMENT,
+ *	LLIST_OUT_OF_RANGE,
+ *	LLIST_MALLOC_ERROR,
+ *	LLIST_MULTITHREAD_ISSUE
+ *} E_LLIST;
+ */
+
+/* Opaque linked list structure */
+/* typedef struct __list llist_t; */
+
 /**
  * struct block_data_s - Block data
  *
