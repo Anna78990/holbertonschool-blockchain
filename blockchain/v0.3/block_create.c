@@ -27,8 +27,8 @@ block_t *block_create(block_t const *prev, int8_t const *data,
 	block = calloc(1, sizeof(block_t));
 	if (!block)
 		return (NULL);
-	transaction = llist_create(MT_SUPPORT_FALSE);
-	if (transaction == NULL)
+	transactions = llist_create(MT_SUPPORT_FALSE);
+	if (transactions == NULL)
 	{
 		free(block);
 		return (NULL);
