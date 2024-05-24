@@ -6,8 +6,10 @@
 #include "../crypto/hblk_crypto.h"
 
 #include "blockchain.h"
-#include "transaction/transaction.h"
+#include <transaction.h>
 #include <llist.h>
+#include "provided.h"
+
 
 typedef struct blockchain_data
 {
@@ -46,8 +48,12 @@ typedef struct Info
 	blockchain_data_t *blockchain_data;
 } info_t;
 
+ssize_t input_buf(info_t *info, char **buf, size_t *len);
+ssize_t get_input(info_t *info);
+char **strtow(char *str, char *d);
 int wallet_save(info_t *info);
 int cmd_wallet_load(info_t *info);
+int cmd_info(info_t *info);
 int cmd_send(info_t *info);
 
 #endif
