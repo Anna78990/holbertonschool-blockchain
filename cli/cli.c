@@ -90,17 +90,30 @@ void set_info(info_t *info, char **av)
 	}
 }
 
+
+/**
+ * ffree - frees a string of strings
+ * @pp: string of strings
+ */
+void ffree(char **pp)
+{
+	char **a = pp;
+
+	if (!pp)
+		return;
+	while (*pp)
+		free(*pp++);
+	free(a);
+}
+
 /**
  * free_info - frees info_t struct fields
  * @info: struct address
  * @all: true if freeing all fields
-free_info
+ */
+void free_info(info_t *info, int all)
 {
-	int i;
-
-	for (i = 0; info->argv[i]; i++);
-		free(info->argv[i]);
-
+	ffree(info->argv);
 	info->argv = NULL;
 	if (all)
 	{
@@ -113,8 +126,6 @@ free_info
 			close(info->readfd);
 	}
 }
-*/
-
 
 /**
  * cli - main shell loop
@@ -142,9 +153,9 @@ int cli(info_t *info, char **av)
 		}
 		else if (isatty(STDIN_FILENO))
 			putchar('\n');
-		/* free_info(info, 0); */
+		free_info(info, 0);
 	}
-	/* free_info(info, 1); */
+	free_info(info, 1);
 	if (!isatty(STDIN_FILENO) && info->status)
 		exit(info->status);
 	if (builtin_ret == -2)

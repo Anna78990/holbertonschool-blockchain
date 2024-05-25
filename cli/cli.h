@@ -32,6 +32,20 @@ typedef struct blockchain_data
  *@readfd: the fd from which to read line input
  *@blockchain_data: stored data about current blockchain
  */
+/**
+ *struct Info - contains pseudo-arguements to pass into a function,
+ *					allowing uniform prototype for function pointer struct
+ *@arg: a string generated from getline containing arguements
+ *@argv: an array of strings generated from arg
+ *@argc: the argument count
+ *@line_count: the error count
+ *@err_num: the error code for exit()s
+ *@linecount_flag: if on count this line of input
+ *@fname: the program filename
+ *@status: the return status of the last exec'd command
+ *@readfd: the fd from which to read line input
+ *@blockchain_data: stored data about current blockchain
+ */
 typedef struct Info
 {
 	char *arg;
