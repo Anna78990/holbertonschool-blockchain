@@ -61,12 +61,12 @@ int isarg(info_t *info, char *arg)
 }
 
 /**
- * cmd_info - displays info about blockchain
+ * show_info - displays info about blockchain
  * @info: Structure containing potential arguments. Used to maintain
  *          constant function prototype.
  *  Return: always 0
  */
-int cmd_info(info_t *info)
+int show_info(info_t *info)
 {
 	if (isarg(info, "-u"))
 	{

@@ -1,12 +1,12 @@
 #include "cli.h"
 
 /**
- * cmd_send - sends coins from one wallet to another
+ * send - sends coins from one wallet to another
  * @info: Structure containing potential arguments. Used to maintain
  *          constant function prototype.
  *  Return: always 0
  */
-int cmd_send(info_t *info)
+int send(info_t *info)
 {
 	EC_KEY *receiver;
 	transaction_t *tx = NULL;
@@ -21,7 +21,7 @@ int cmd_send(info_t *info)
 			break;
 	receiver = ec_from_pub(pub);
 	if (!receiver)
-		return (printf("Invalid receiver public key.\n"), 0);
+		return (printf("Receiver public key is Invalid.\n"), 0);
 	tx = transaction_create(info->blockchain_data->key, receiver, amount,
 		info->blockchain_data->blockchain->unspent);
 	if (!tx)

@@ -1,12 +1,11 @@
 #include "cli.h"
 
 /**
- * cmd_wallet_load - loads wallet from file
- * @info: Structure containing potential arguments. Used to maintain
- *          constant function prototype.
- *  Return: Always 0
+ * wallet_load - loads wallet from file
+ * @info: structure Info
+ * Return: Always 0
  */
-int cmd_wallet_load(info_t *info)
+int wallet_load(info_t *info)
 {
 	EC_KEY *key;
 

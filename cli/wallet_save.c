@@ -1,10 +1,9 @@
 #include "cli.h"
 
 /**
- * cmd_wallet_save - saves wallet to file
- * @info: Structure containing potential arguments. Used to maintain
- *          constant function prototype.
- *  Return: Always 0
+ * wallet_save - saves wallet to file
+ * @info: info
+ * Return: Always 0
  */
 int wallet_save(info_t *info)
 {
